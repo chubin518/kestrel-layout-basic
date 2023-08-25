@@ -5,7 +5,6 @@ import globalComponents from '@/components';
 import router from './router';
 import store from './store';
 import i18n from './locale';
-import directive from './directive';
 
 import App from './App.vue';
 // Styles are imported via arco-plugin. See config/plugin/arcoStyleImport.ts in the directory for details
@@ -23,6 +22,5 @@ app.use(router);
 app.use(store);
 app.use(i18n);
 app.use(globalComponents);
-app.use(directive);
 
 app.mount('#app');
