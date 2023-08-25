@@ -1,0 +1,18 @@
+logging:
+  fields:
+    env: "dev"
+  level: "info"
+  file_name: "./logs/app.log"
+  max_size: 100
+  max_age: 7
+  max_backups: 14
+  local_time: true
+  compress: true
+server:
+  port: 8081
+  max_header_bytes: 1048576
+  enable_cors: true
+  read_timeout: 30s
+  write_timeout: 30s
+  startup_timeout: 5s
+  shutdown_timeout: 5s
