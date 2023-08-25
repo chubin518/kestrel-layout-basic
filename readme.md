@@ -81,3 +81,22 @@ go install github.com/go-nunu/nunu@latest
 nunu new projectName -r https://github.com/chubin518/kestrel-layout-basic.git
 
 ```
+
+### 启动项目
+```
+# 构建webui
+cd webui
+yarn install
+yarn run build 
+
+# 回到根目录
+cd ..
+go run ./cmd
+
+# build项目
+./build.sh
+
+# 启动build项目
+./deploy/app
+
+```
