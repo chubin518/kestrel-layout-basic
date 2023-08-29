@@ -6,15 +6,12 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"runtime"
 	"syscall"
 	"time"
 
-	"github.com/chubin518/kestrel-layout-basic/buildinfo"
 	"github.com/chubin518/kestrel-layout-basic/pkg/env"
 	"github.com/chubin518/kestrel-layout-basic/pkg/logging"
 	"github.com/chubin518/kestrel-layout-basic/pkg/middleware"
-	"github.com/chubin518/kestrel-layout-basic/pkg/result"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -100,31 +97,6 @@ func (g *Graceful) setupEngine() *gin.Engine {
 
 	server.Use(middleware.RequestIdMiddleware())
 	server.Use(middleware.RecoveryMiddleware())
-
-	server.GET("/health", func(ctx *gin.Context) {
-		result.OK.WithData(map[string]any{
-			"app": map[string]any{
-				"name":    buildinfo.Name,
-				"env":     buildinfo.Environment,
-				"version": buildinfo.Version,
-			},
-			"build": map[string]any{
-				"time":    buildinfo.BuildTime,
-				"version": buildinfo.BuildVersion,
-			},
-			"runtime": map[string]any{
-				"version": fmt.Sprintf("go version %s %s/%s", runtime.Version(), runtime.GOOS, runtime.GOARCH),
-			},
-		}).JSON(ctx)
-	})
-
-	server.NoMethod(func(ctx *gin.Context) {
-		result.METHOD_NOT_ALLOWED.JSON(ctx)
-	})
-
-	server.NoRoute(func(ctx *gin.Context) {
-		result.NOT_FOUND.JSON(ctx)
-	})
 
 	return server
 }

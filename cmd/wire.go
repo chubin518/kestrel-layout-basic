@@ -16,6 +16,7 @@ var ServiceSet = wire.NewSet(
 
 var HandlerSet = wire.NewSet(
 	handler.NewUserHandler,
+	handler.NewCmdHandler,
 )
 
 var RoutesSet = wire.NewSet(

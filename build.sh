@@ -35,10 +35,12 @@ BUILD_FLAGS="-X github.com/chubin518/kestrel-layout-basic/buildinfo.Version=$APP
 -X 'github.com/chubin518/kestrel-layout-basic/buildinfo.BuildTime=`date "+%Y-%m-%d %H:%M:%S"`' \
 -X 'github.com/chubin518/kestrel-layout-basic/buildinfo.BuildVersion=`go version`'"
 
-CGO_ENABLED=0 GOOS=$GO_OS GOARCH=$GO_ARCH \
+GOOS=$GO_OS GOARCH=$GO_ARCH \
 go build -o $BUILD_DIR/$APP_NAME \
 -ldflags "$BUILD_FLAGS" cmd/main.go cmd/wire_gen.go
 
 echo "BUILD SUCCESS"
 
 chmod a+x $BUILD_DIR/$APP_NAME
+
+echo "Run App ./$BUILD_DIR/$APP_NAME"

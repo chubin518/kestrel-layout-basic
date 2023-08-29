@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/chubin518/kestrel-layout-basic/pkg/graceful"
-	"github.com/chubin518/kestrel-layout-basic/pkg/logging"
 )
 
 func NewAppHook() *graceful.Hook {
@@ -13,7 +12,6 @@ func NewAppHook() *graceful.Hook {
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			logging.Log.Sync()
 			return nil
 		},
 	}

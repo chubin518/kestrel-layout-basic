@@ -1,10 +1,12 @@
 package middleware
 
 import (
+	"fmt"
 	"net"
 	"net/http"
 	"net/http/httputil"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/chubin518/kestrel-layout-basic/pkg/logging"
@@ -40,9 +42,11 @@ func RecoveryMiddleware() gin.HandlerFunc {
 					ctx.Abort()
 					return
 				}
+				_, file, line, _ := runtime.Caller(3)
 				logging.WithContext(ctx.Request.Context()).Error("[Recovery from panic]",
 					zap.Any("error", err),
 					zap.String("request", string(httpRequest)),
+					zap.String("caller", fmt.Sprintf("%s:%d", file, line)),
 				)
 				ctx.AbortWithStatus(http.StatusInternalServerError)
 			}

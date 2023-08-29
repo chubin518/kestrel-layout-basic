@@ -24,13 +24,9 @@ func NewBuilder(opts ...Option) *GracefulBuilder {
 
 func NewBuilderWithOptions(options *GracefulOptions) *GracefulBuilder {
 	return &GracefulBuilder{
-		options: options,
-		lifecycle: &Lifecycle{
-			hooks: make([]*Hook, 0),
-		},
-		routesManager: &RoutesManager{
-			routes: make([]*Routes, 0),
-		},
+		options:       options,
+		lifecycle:     NewLifecycle(),
+		routesManager: NewRoutesManager(),
 	}
 }
 

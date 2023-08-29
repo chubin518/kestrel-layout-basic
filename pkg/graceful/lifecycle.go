@@ -1,6 +1,10 @@
 package graceful
 
-import "context"
+import (
+	"context"
+
+	"github.com/chubin518/kestrel-layout-basic/pkg/logging"
+)
 
 // A Hook is a pair of start and stop callbacks, either of which can be nil,
 // plus a string identifying the supplier of the hook.
@@ -9,9 +13,27 @@ type Hook struct {
 	OnStop  func(context.Context) error
 }
 
+func DefaultHook() *Hook {
+	return &Hook{
+		OnStart: func(ctx context.Context) error {
+			return nil
+		},
+		OnStop: func(ctx context.Context) error {
+			logging.Log.Sync()
+			return nil
+		},
+	}
+}
+
 // Lifecycle coordinates application lifecycle hooks.
 type Lifecycle struct {
 	hooks []*Hook
+}
+
+func NewLifecycle() *Lifecycle {
+	hooks := make([]*Hook, 0)
+	hooks = append(hooks, DefaultHook())
+	return &Lifecycle{hooks: hooks}
 }
 
 // Append adds a Hook to the lifecycle.

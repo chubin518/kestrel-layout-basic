@@ -19,7 +19,8 @@ func newApp() (*app.App, error) {
 	hook := app.NewAppHook()
 	userService := service.NewUserService()
 	userHandler := handler.NewUserHandler(userService)
-	routes := app.NewRoutes(userHandler)
+	cmdHandler := handler.NewCmdHandler()
+	routes := app.NewRoutes(userHandler, cmdHandler)
 	appApp := app.NewApp(hook, routes)
 	return appApp, nil
 }
@@ -28,7 +29,7 @@ func newApp() (*app.App, error) {
 
 var ServiceSet = wire.NewSet(service.NewUserService)
 
-var HandlerSet = wire.NewSet(handler.NewUserHandler)
+var HandlerSet = wire.NewSet(handler.NewUserHandler, handler.NewCmdHandler)
 
 var RoutesSet = wire.NewSet(app.NewRoutes)
 

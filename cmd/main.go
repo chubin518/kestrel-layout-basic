@@ -11,7 +11,11 @@ import (
 
 func main() {
 	flag.Parse()
-
+	defer func() {
+		if err := recover(); err != nil {
+			logging.Errorf("Recovered err: %v", err)
+		}
+	}()
 	// init confg
 	err := config.Init()
 	if err != nil {
