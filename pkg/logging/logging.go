@@ -19,21 +19,14 @@ var once sync.Once
 
 // Init init zap log
 func Init(opts ...Option) {
-	options := &LoggingOptions{
-		Compress:   true,
-		MaxSize:    50,
-		MaxAge:     7,
-		MaxBackups: 14,
-		FileName:   "logs/app.log",
-	}
-	for _, apply := range opts {
-		apply(options)
-	}
-	InitWithOptions(options)
+	InitWithOptions(NewLoggingOptions(), opts...)
 }
 
-func InitWithOptions(options *LoggingOptions) {
+func InitWithOptions(options *LoggingOptions, opts ...Option) {
 	once.Do(func() {
+		for _, apply := range opts {
+			apply(options)
+		}
 		level := zap.InfoLevel
 		if options.Level != "" {
 			zapLevel, err := zapcore.ParseLevel(options.Level)

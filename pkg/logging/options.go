@@ -15,6 +15,19 @@ type LoggingOptions struct {
 
 type Option func(*LoggingOptions)
 
+func NewLoggingOptions() *LoggingOptions {
+	return &LoggingOptions{
+		Fields:     make(map[string]any),
+		Level:      "info",
+		FileName:   "logs/app.log",
+		MaxSize:    10,
+		MaxAge:     7,
+		MaxBackups: 14,
+		LocalTime:  false,
+		Compress:   true,
+	}
+}
+
 // WithFields
 func WithFields(fields map[string]any) Option {
 	return func(args *LoggingOptions) {
